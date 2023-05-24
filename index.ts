@@ -18,6 +18,12 @@ app.post('/api/send', (req: Request, res: Response) => {
     res.send("success")
 });
 
+app.get('/api/receive', (req: Request, res: Response) => {
+    console.log("fujaks")
+    const data = {pinValue: "HIGH"}
+    res.send(JSON.stringify(data))
+});
+
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
