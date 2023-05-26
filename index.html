@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Button Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+        function sendPostRequest(buttonId) {
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+
+            // Define the POST request parameters
+            xhr.open("POST", "http://localhost:8000/api/button", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Prepare the data to be sent as JSON
+            var data = JSON.stringify({ "pinValue": buttonId });
+
+            // Send the POST request
+            xhr.send(data);
+        }
+
+        function updateString() {
+            $.ajax({
+                url: 'http://localhost:8000/api/temp',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('h2#temp').text(data.temp + " °C");
+                    console.log(data.temp)
+                }
+            });
+        }
+
+        setInterval(updateString, 1000); // Update every 5 seconds
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: large;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button.red {
+            background-color: #FF5252;
+        }
+
+        .button.red:hover {
+            background-color: #ff3232;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Temperatūra</h1>
+    <h2 id="temp"></h2>
+    <div class="button-container">
+        <button class="button" onclick="sendPostRequest('HIGH')">HIGH</button>
+        <button class="button red" onclick="sendPostRequest('LOW')">LOW</button>
+    </div>
+</body>
+
+</html>
